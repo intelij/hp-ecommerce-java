@@ -5,8 +5,8 @@ import com.handpoint.ecommerce.core.exceptions.HpServerError;
 import com.handpoint.ecommerce.messages.payment.*;
 import com.handpoint.ecommerce.messages.token.Token;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
-import static junit.framework.Assert.assertNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -15,7 +15,8 @@ import static org.junit.Assert.assertThat;
  * @author palmithor
  * @since 2013-03
  */
-public class ECommerceClientTest {
+@Category(IntegrationTest.class)
+public class ECommerceClientIT {
 
     // Test Environment
     public static final String SHARED_SECRET = "8F10C8AD35B7AEC11675B50DBF6ACEAA0B4EC280B92500E51A02F7BBBE7B07C6";
@@ -157,7 +158,7 @@ public class ECommerceClientTest {
     @Test
     public void testSendPayment() throws HpServerError, HpECommerceException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
-        Payment payment = client.payment(Currency.ISK, AMOUNT_120_DECLINE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
+        Payment payment = client.payment(Currency.ISK, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         assertThat(payment.getIssuerResponseText(), is("Yay ! Authorized by APDUMMY :-)"));
         assertThat(payment.getAgreementNumber(), is("123456789"));
         assertThat(payment.getAmount(), is(AMOUNT_70_APPROVE_AMOUNT));
@@ -205,7 +206,7 @@ public class ECommerceClientTest {
         assertNotNull(payment.getPaymentGuid());
         assertNotNull(payment.getApprovalCode());
         Reversal reversal = client.reversePayment(payment.getPaymentGuid());
-        assertThat(reversal.getIssuerResponseText(), is("TPOS 0000-Success"));
+        assertThat(reversal.getIssuerResponseText(), is("Voided by APDUMMY"));
         assertThat(reversal.getAgreementNumber(), is("123456789"));
         assertThat(reversal.getAmount(), is(AMOUNT_70_APPROVE_AMOUNT));
         assertThat(reversal.getCurrency(), is(Currency.ISK.alpha));

@@ -9,11 +9,7 @@ import javax.xml.bind.JAXBException;
 import static org.junit.Assert.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: palmithor
- * Date: 3/1/13
- * Time: 10:54 AM
- * To change this template use File | Settings | File Templates.
+ * Tests for message creator
  */
 public class MessageCreatorTest {
 

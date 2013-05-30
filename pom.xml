@@ -5,11 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.handpoint.bixby</groupId>
+    <groupId>com.handpoint</groupId>
     <artifactId>ecommerce-client</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <dependencies>
+    <packaging>jar</packaging>
 
+    <name>hp-ecommerce-java</name>
+
+    <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -47,19 +50,65 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-                    <plugin>
-                        <artifactId>maven-assembly-plugin</artifactId>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>fully.qualified.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+            <!-- Run integration tests (*IT) -->
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.12</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.12</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <groups>com.handpoint.ecommerce.core.IntegrationTest</groups>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
                         <configuration>
-                            <archive>
-                                <manifest>
-                                    <mainClass>fully.qualified.MainClass</mainClass>
-                                </manifest>
-                            </archive>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
+                            <includes>
+                                <include>**/*.class</include>
+                            </includes>
                         </configuration>
-                    </plugin>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Unit Tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.11</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.12</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <includes>
+                        <include>**/*.class</include>
+                    </includes>
+                    <excludedGroups>com.handpoint.ecommerce.core.IntegrationTest</excludedGroups>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

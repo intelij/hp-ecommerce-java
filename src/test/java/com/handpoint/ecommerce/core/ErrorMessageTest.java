@@ -7,12 +7,12 @@ import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 /**
- * Created with IntelliJ IDEA.
- * User: palmithor
- * Date: 3/1/13
- * Time: 4:13 PM
- * To change this template use File | Settings | File Templates.
+ * Tests for error messages
  */
 public class ErrorMessageTest {
 
@@ -28,6 +28,19 @@ public class ErrorMessageTest {
 
         errorMessage.setDetails(errorDetails);
 
-        System.out.println(messageConverter.getMessage(ErrorMessage.class, errorMessage));
+        String errorMessageStr = messageConverter.getMessage(ErrorMessage.class, errorMessage);
+        assertTrue(errorMessageStr.contains("<error>"));
+        assertTrue(errorMessageStr.contains("<reason>Error reason</reason>"));
+        assertTrue(errorMessageStr.contains("<details>"));
+        assertTrue(errorMessageStr.contains("<detail>detail1</detail>"));
+        assertTrue(errorMessageStr.contains("<detail>detail2</detail>"));
+        assertTrue(errorMessageStr.contains("</details>"));
+        assertTrue(errorMessageStr.contains("</error>"));
+
+        ErrorMessage errorMessageConvertedFromString = messageConverter.convert(ErrorMessage.class, errorMessageStr);
+        assertThat(errorMessageConvertedFromString.getReason(), is("Error reason"));
+        assertThat(errorMessageConvertedFromString.getDetails().get(0), is("detail1"));
+        assertThat(errorMessageConvertedFromString.getDetails().get(1), is("detail2"));
+
     }
 }
