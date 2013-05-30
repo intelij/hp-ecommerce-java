@@ -49,6 +49,33 @@ public class ECommerceClient {
         client = new BixbyClient(eCommerceUser.getSharedSecret(), eCommerceUser.getEnvironment(), enableMessageLogging);
     }
 
+    /**
+     * Default constructor. Instantiates Bixby Client which is used to send the actual HTTP request.
+     * Logging filter is disabled.
+     *
+     * @param cardAcceptor the cardAcceptor to use. Assigned by Handpoint
+     * @param sharedSecret the sharedSecret used to authenticate against Handpoint ECommerce API
+     * @param environment enum used to set environment to either TEST or LIVE
+     */
+    public ECommerceClient(String cardAcceptor, String sharedSecret, Environment environment) {
+        this.cardAcceptor = cardAcceptor;
+        client = new BixbyClient(sharedSecret, environment);
+    }
+
+    /**
+     * Default constructor. Instantiates Bixby Client which is used to send the actual HTTP request.
+     * Logging filter is disabled.
+     *
+     * @param cardAcceptor the cardAcceptor to use. Assigned by Handpoint
+     * @param sharedSecret the sharedSecret used to authenticate against Handpoint ECommerce API
+     * @param environment enum used to set environment to either TEST or LIVE
+     * @param enableMessageLogging if true message logging filter is added to the http client, otherwise not.
+     */
+    public ECommerceClient(String cardAcceptor, String sharedSecret, Environment environment, boolean enableMessageLogging) {
+        this.cardAcceptor = cardAcceptor;
+        client = new BixbyClient(sharedSecret, environment, enableMessageLogging);
+    }
+
 
     /**
      * Regular authorization with Customer reference and without card verification code
