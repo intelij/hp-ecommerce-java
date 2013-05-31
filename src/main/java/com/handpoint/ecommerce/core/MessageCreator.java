@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class MessageCreator {
 
-    protected static AuthorizationRequest authorizationRequest(String paymentScenario, Currency currency, String amount,
+    protected static AuthorizationRequest authorizationRequest(String paymentScenario, String currency, String amount,
                                                             String token, String cardNumber, String expiryDateMMYY,
                                                             String cardVerificationCode, String customerReference) throws InvalidMessageException {
         AuthorizationRequest authorizationRequest = new AuthorizationRequest();
@@ -35,7 +35,7 @@ public class MessageCreator {
         return authorizationRequest;
     }
 
-    protected static PaymentRequest paymentRequest(String paymentScenario, Currency currency, String amount,
+    protected static PaymentRequest paymentRequest(String paymentScenario, String currency, String amount,
                                                 String token, String cardNumber, String expiryDateMMYY,
                                                 String cardVerificationCode, String customerReference, String authorizationGuid) throws InvalidMessageException {
         PaymentRequest paymentRequest = new PaymentRequest();
@@ -60,7 +60,7 @@ public class MessageCreator {
     }
 
 
-    protected static RefundRequest refundRequest(String paymentScenario, Currency currency, String amount,
+    protected static RefundRequest refundRequest(String paymentScenario, String currency, String amount,
                                               String token, String cardNumber, String expiryDateMMYY,
                                               String cardVerificationCode, String customerReference, String paymentGuid) throws InvalidMessageException {
         RefundRequest refundRequest = new RefundRequest();
@@ -96,7 +96,7 @@ public class MessageCreator {
         }
     }
 
-    protected static CancellationRequest cancellationRequest(String transactionType, Currency currency, String amount, String terminalDateTime) throws InvalidMessageException {
+    protected static CancellationRequest cancellationRequest(String transactionType, String currency, String amount, String terminalDateTime) throws InvalidMessageException {
         CancellationRequest cancellationRequest = new CancellationRequest();
         cancellationRequest.setAmount(amount);
         cancellationRequest.setCurrency(currency);

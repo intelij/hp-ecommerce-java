@@ -90,7 +90,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorize(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
+    public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, null, customerReference);
@@ -112,7 +112,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorize(Currency currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
+    public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, null, null);
@@ -135,7 +135,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithCVC(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
+    public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, cardVerificationCode, customerReference);
@@ -158,7 +158,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithCVC(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
+    public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, cardVerificationCode, null);
@@ -181,7 +181,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithToken(Currency currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
+    public Authorization authorizeWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     null, null, null, customerReference);
@@ -202,7 +202,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithToken(Currency currency, String amount, String token) throws HpECommerceException, HpServerError {
+    public Authorization authorizeWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     null, null, null, null);
@@ -226,7 +226,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeAndStoreToken(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
+    public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     cardNumber, expiryDateMMYY, null, customerReference);
@@ -249,7 +249,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeAndStoreToken(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
+    public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
         try {
             AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     cardNumber, expiryDateMMYY, null, null);
@@ -272,7 +272,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment payment(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
+    public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, null, customerReference, null);
@@ -294,7 +294,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment payment(Currency currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
+    public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, null, null, null);
@@ -317,7 +317,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithCVC(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
+    public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, cardVerificationCode, customerReference, null);
@@ -339,7 +339,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithCVC(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
+    public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, cardVerificationCode, null, null);
@@ -361,7 +361,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithToken(Currency currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
+    public Payment paymentWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     null, null, null, customerReference, null);
@@ -382,7 +382,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithToken(Currency currency, String amount, String token) throws HpECommerceException, HpServerError {
+    public Payment paymentWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     null, null, null, null, null);
@@ -407,7 +407,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentAndStoreToken(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
+    public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     cardNumber, expiryDateMMYY, null, customerReference, null);
@@ -430,7 +430,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentAndStoreToken(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
+    public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     cardNumber, expiryDateMMYY, null, null, null);
@@ -451,7 +451,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment captureAuthorization(Currency currency, String amount, String authorizationGuid) throws HpECommerceException, HpServerError {
+    public Payment captureAuthorization(String currency, String amount, String authorizationGuid) throws HpECommerceException, HpServerError {
         try {
             PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     null, null, null, null, authorizationGuid);
@@ -474,7 +474,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refund(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
+    public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     cardNumber, expiryDateMMYY, null, customerReference, null);
@@ -496,7 +496,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refund(Currency currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
+    public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
 
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
@@ -519,7 +519,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundWithToken(Currency currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
+    public Refund refundWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     null, null, null, customerReference, null);
@@ -540,7 +540,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundWithToken(Currency currency, String amount, String token) throws HpECommerceException, HpServerError {
+    public Refund refundWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     null, null, null, null, null);
@@ -565,7 +565,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundAndStoreToken(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
+    public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     cardNumber, expiryDateMMYY, null, customerReference, null);
@@ -588,7 +588,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundAndStoreToken(Currency currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
+    public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
                     cardNumber, expiryDateMMYY, null, null, null);
@@ -609,7 +609,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundPayment(Currency currency, String amount, String paymentGuid) throws HpECommerceException, HpServerError {
+    public Refund refundPayment(String currency, String amount, String paymentGuid) throws HpECommerceException, HpServerError {
         try {
             RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
                     null, null, null, null, paymentGuid);
@@ -742,7 +742,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Cancellation cancelAuthorization(Currency currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
+    public Cancellation cancelAuthorization(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
         try {
             CancellationRequest request = MessageCreator.cancellationRequest(AUTHORIZATION, currency, amount, terminalDateTimeOriginal);
             return client.sendCancellationRequest(request, cardAcceptor);
@@ -762,7 +762,7 @@ public class ECommerceClient {
      * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Cancellation cancelPayment(Currency currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
+    public Cancellation cancelPayment(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
         try {
             CancellationRequest request = MessageCreator.cancellationRequest(PAYMENT, currency, amount, terminalDateTimeOriginal);
             return client.sendCancellationRequest(request, cardAcceptor);
@@ -783,7 +783,7 @@ public class ECommerceClient {
      *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
 
-    public Cancellation cancelRefund(Currency currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
+    public Cancellation cancelRefund(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
         try {
             CancellationRequest request = MessageCreator.cancellationRequest(REFUND, currency, amount, terminalDateTimeOriginal);
             return client.sendCancellationRequest(request, cardAcceptor);

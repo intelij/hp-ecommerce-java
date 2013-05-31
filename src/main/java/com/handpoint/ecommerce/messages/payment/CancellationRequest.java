@@ -17,7 +17,7 @@ public class CancellationRequest {
     private String transactionType;
     @XmlElement
     @NotNull(message = "currency is required")
-    private Currency currency;
+    private String currency;
     @XmlElement
     private String amount;
     @XmlElement
@@ -34,11 +34,11 @@ public class CancellationRequest {
         this.transactionType = transactionType;
     }
 
-    public Currency getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 

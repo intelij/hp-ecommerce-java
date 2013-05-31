@@ -22,7 +22,7 @@ public class RefundRequest {
 
     @XmlElement
     @NotNull(message = "currency is required")
-    private Currency currency;
+    private String currency;
 
     @XmlElement
     @NotNull(message = "amount is required")
@@ -60,11 +60,11 @@ public class RefundRequest {
         this.paymentScenario = paymentScenario;
     }
 
-    public Currency getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 

@@ -15,9 +15,9 @@ public class MessageCreatorTest {
 
     @Test
     public void testAuthorizationWithCardData() throws Exception {
-        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK, "100", null, "40000000000000002", "1212", null, null);
+        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK.alpha, "100", null, "40000000000000002", "1212", null, null);
         assertEquals("WEB", authorizationRequest.getPaymentScenario());
-        assertEquals(Currency.ISK, authorizationRequest.getCurrency());
+        assertEquals(Currency.ISK.alpha, authorizationRequest.getCurrency());
         assertEquals("100", authorizationRequest.getAmount());
         assertEquals("40000000000000002", authorizationRequest.getCardNumber());
         assertEquals("1212", authorizationRequest.getExpiryDateMMYY());
@@ -28,9 +28,9 @@ public class MessageCreatorTest {
 
     @Test
     public void testAuthorizationWithToken() throws Exception {
-        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK, "100", "token", null, null, null, null);
+        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK.alpha, "100", "token", null, null, null, null);
         assertEquals("WEB", authorizationRequest.getPaymentScenario());
-        assertEquals(Currency.ISK, authorizationRequest.getCurrency());
+        assertEquals(Currency.ISK.alpha, authorizationRequest.getCurrency());
         assertEquals("100", authorizationRequest.getAmount());
         assertEquals("token", authorizationRequest.getToken());
         assertNull(authorizationRequest.getCardVerificationCode());
@@ -41,9 +41,9 @@ public class MessageCreatorTest {
 
     @Test
     public void testAuthorizationWithTokenAndCardData() throws Exception {
-        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK, "100", "token", "40000000000000002", "1212", null, null);
+        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK.alpha, "100", "token", "40000000000000002", "1212", null, null);
         assertEquals("WEB", authorizationRequest.getPaymentScenario());
-        assertEquals(Currency.ISK, authorizationRequest.getCurrency());
+        assertEquals(Currency.ISK.alpha, authorizationRequest.getCurrency());
         assertEquals("100", authorizationRequest.getAmount());
         assertEquals("token", authorizationRequest.getToken());
         assertEquals("40000000000000002", authorizationRequest.getCardNumber());
@@ -55,7 +55,7 @@ public class MessageCreatorTest {
     @Test
     public void testNeitherTokenOrCardData()  {
         try {
-            AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK, "100", null, null, null, null, null);
+            AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK.alpha, "100", null, null, null, null, null);
         } catch(InvalidMessageException e) {
             assertTrue(e.getLocalizedMessage().equals("Invalid card data. Must include either token or card number and expiry date"));
         }
@@ -75,7 +75,7 @@ public class MessageCreatorTest {
     @Test
     public void testCurrencyEnumToXmlMessage() throws InvalidMessageException, JAXBException {
         JaxbMessageConverter messageConverter = new JaxbMessageConverter();
-        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK, "100", "token", "40000000000000002", "1212", null, null);
+        AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK.alpha, "100", "token", "40000000000000002", "1212", null, null);
         String xml = messageConverter.getMessage(AuthorizationRequest.class, authorizationRequest);
         assertTrue(xml.contains("<authorization>"));
         assertTrue(xml.contains("<paymentScenario>WEB</paymentScenario>"));
