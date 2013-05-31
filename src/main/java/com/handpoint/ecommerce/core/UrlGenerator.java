@@ -5,10 +5,10 @@ import com.handpoint.ecommerce.core.config.Config;
 import com.handpoint.ecommerce.core.exceptions.HpServerError;
 
 /**
- * Class used to generate
+ * Class used to generate urls
  *
- * Date: 3/1/13 1:28 PM
- * To change this template use File | Settings | File Templates.
+ * @since 3/1/13 1:28 PM
+ * @author palmithor
  */
 public class UrlGenerator {
 
