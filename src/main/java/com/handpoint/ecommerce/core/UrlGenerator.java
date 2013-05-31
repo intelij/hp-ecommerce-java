@@ -5,14 +5,12 @@ import com.handpoint.ecommerce.core.config.Config;
 import com.handpoint.ecommerce.core.exceptions.HpServerError;
 
 /**
- * Created with IntelliJ IDEA.
- * User: palmithor
- * Date: 3/1/13
- * Time: 1:28 PM
+ * Class used to generate
+ *
+ * Date: 3/1/13 1:28 PM
  * To change this template use File | Settings | File Templates.
  */
 public class UrlGenerator {
-
 
     public static final String ECOMMERCE_PATH = "/web/";
     public static final String TOKENIZATION_PATH = "/tokenstore/";
