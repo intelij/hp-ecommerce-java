@@ -29,6 +29,8 @@ under the License.
     <packaging>jar</packaging>
 
     <name>hp-ecommerce-java</name>
+    <description>Client used to simplify integration to Handpoint E-Commerce service</description>
+    <url>http://www.handpoint.com</url>
 
     <dependencies>
         <dependency>
@@ -71,11 +73,6 @@ under the License.
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>fully.qualified.MainClass</mainClass>
-                        </manifest>
-                    </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
@@ -140,6 +137,13 @@ under the License.
         </developer>
     </developers>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <distributionManagement>
         <snapshotRepository>
