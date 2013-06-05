@@ -8,8 +8,8 @@ This is a java client library to integrate with Handpoint E-Commerce API
     To be done
 
 ## Usage
-Please take a look at ECommerceClientIT for more information (https://github.com/handpoint/hp-ecommerce-java/blob/master/src/test/java/com/handpoint/ecommerce/core/ECommerceClientIT.java)
-
+Here below are examples on how to initalize client and use for different kind of operations.
+Please take a look at ECommerceClientIT for more information [EcommerceClientIT](https://github.com/handpoint/hp-ecommerce-java/blob/master/src/test/java/com/handpoint/ecommerce/core/ECommerceClientIT.java)
 
 ### Initialize ECommerce Client
 Instance ECommerceClient with values provided by Handpoint, for test environment, use the following values:
