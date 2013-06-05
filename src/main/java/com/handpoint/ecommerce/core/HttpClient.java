@@ -125,7 +125,9 @@ public class HttpClient {
         return builder;
     }
 
-
+    /**
+     * Builder to create HttpClient instance.
+     */
     public static final class Builder {
         private HttpClient httpClient;
 

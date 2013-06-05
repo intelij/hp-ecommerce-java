@@ -13,9 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * All requests sent to the Handpoint E-Commerce interface need to be authenticated using
+ * HMAC. This Jersey client filter calculates the HMAC and adds it to the request.
  *
- * @since 2013-03
  * @author palmithor
+ * @since 2013-03
  */
 public class HmacFilter extends ClientFilter {
 
@@ -25,10 +27,10 @@ public class HmacFilter extends ClientFilter {
     private String sharedSecret;
 
     static final byte[] HEX_CHAR_TABLE = {
-            (byte)'0', (byte)'1', (byte)'2', (byte)'3',
-            (byte)'4', (byte)'5', (byte)'6', (byte)'7',
-            (byte)'8', (byte)'9', (byte)'a', (byte)'b',
-            (byte)'c', (byte)'d', (byte)'e', (byte)'f'
+            (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+            (byte) '4', (byte) '5', (byte) '6', (byte) '7',
+            (byte) '8', (byte) '9', (byte) 'a', (byte) 'b',
+            (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f'
     };
 
 
@@ -46,6 +48,11 @@ public class HmacFilter extends ClientFilter {
         return response;
     }
 
+    /**
+     * Adds headers needed for authentication
+     *
+     * @param request to be sent
+     */
     private void addHeaders(ClientRequest request) {
         String now = dateFormat.format(new Date());
         String toMac = getHmacString(request, now);
@@ -55,6 +62,12 @@ public class HmacFilter extends ClientFilter {
     }
 
 
+    /**
+     * Generates HMAC from a String using shared secret member variable.
+     *
+     * @param toMac string to hash
+     * @return hashed string
+     */
     private String generateHmac(String toMac) {
         try {
             SecretKeySpec signingKey = new SecretKeySpec(sharedSecret.getBytes(), HMAC_SHA_1);
@@ -70,8 +83,14 @@ public class HmacFilter extends ClientFilter {
         }
     }
 
-    private String getHexString(byte[] raw) throws UnsupportedEncodingException
-    {
+    /**
+     * Convert bytes to hexadecimal string.
+     *
+     * @param raw bytes to convert
+     * @return hexadecimal string - the hashed value
+     * @throws UnsupportedEncodingException
+     */
+    private String getHexString(byte[] raw) throws UnsupportedEncodingException {
         byte[] hex = new byte[2 * raw.length];
         int index = 0;
 
@@ -83,6 +102,13 @@ public class HmacFilter extends ClientFilter {
         return new String(hex, UTF_8);
     }
 
+    /**
+     * Builds the HmacString according to rules on how to create a string to hash.
+     *
+     * @param request to be sent
+     * @param date    date string
+     * @return string that will be hashed.
+     */
     private String getHmacString(ClientRequest request, String date) {
         StringBuilder builder = new StringBuilder();
         builder.append(request.getMethod());

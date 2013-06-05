@@ -19,12 +19,30 @@ public class JaxbMessageConverter {
         return convert(messageType, new StringReader(message));
     }
 
-    protected  <T> T convert(Class<T> messageType, Reader reader) throws JAXBException {
+    /**
+     * Converts a String to a object of type T. Note, object must be Entity class.
+     *
+     * @param messageType type of class to convert to
+     * @param reader
+     * @param <T>         type of class
+     * @return new object of type T
+     * @throws JAXBException
+     */
+    protected <T> T convert(Class<T> messageType, Reader reader) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(messageType);
         Unmarshaller u = jc.createUnmarshaller();
         return (T) u.unmarshal(reader);
     }
 
+    /**
+     * Creates a xml string from an object of type T. Note, object must be Entity class.
+     *
+     * @param messageType
+     * @param object
+     * @param <T>
+     * @return
+     * @throws JAXBException
+     */
     protected <T> String getMessage(Class<T> messageType, Object object) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(messageType);
         Marshaller m = jc.createMarshaller();
@@ -33,15 +51,4 @@ public class JaxbMessageConverter {
         m.marshal(object, writer);
         return writer.toString();
     }
-
-    protected <T> String getMessageWithoutHeader(Class<T> messageType, Object object) throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(messageType);
-        Marshaller m = jc.createMarshaller();
-        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-        StringWriter writer = new StringWriter();
-        m.marshal(object, writer);
-        return writer.toString();
-    }
-
 }

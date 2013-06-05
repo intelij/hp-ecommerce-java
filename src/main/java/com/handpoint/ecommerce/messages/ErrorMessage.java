@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
- *
+ * If the error returns an error message, this is the object its mapped to.
  */
 @XmlRootElement(name = "error")
 @XmlAccessorType(XmlAccessType.FIELD)

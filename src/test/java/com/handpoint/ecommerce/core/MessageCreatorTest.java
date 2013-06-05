@@ -1,6 +1,6 @@
 package com.handpoint.ecommerce.core;
 
-import com.handpoint.ecommerce.messages.InvalidMessageException;
+import com.handpoint.ecommerce.core.exceptions.InvalidMessageException;
 import com.handpoint.ecommerce.messages.payment.AuthorizationRequest;
 import org.junit.Test;
 
@@ -53,10 +53,10 @@ public class MessageCreatorTest {
     }
 
     @Test
-    public void testNeitherTokenOrCardData()  {
+    public void testNeitherTokenOrCardData() {
         try {
             AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest("WEB", Currency.ISK.alpha, "100", null, null, null, null, null);
-        } catch(InvalidMessageException e) {
+        } catch (InvalidMessageException e) {
             assertTrue(e.getLocalizedMessage().equals("Invalid card data. Must include either token or card number and expiry date"));
         }
     }
@@ -65,7 +65,7 @@ public class MessageCreatorTest {
     public void testViolateConstraints() {
         try {
             AuthorizationRequest authorizationRequest = MessageCreator.authorizationRequest(null, null, null, null, null, null, null, null);
-        } catch(InvalidMessageException e) {
+        } catch (InvalidMessageException e) {
             assertTrue(e.getLocalizedMessage().contains("paymentScenario is required"));
             assertTrue(e.getLocalizedMessage().contains("currency is required"));
             assertTrue(e.getLocalizedMessage().contains("amount is required"));

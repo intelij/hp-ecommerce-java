@@ -1,8 +1,7 @@
 package com.handpoint.ecommerce.core;
 
 /**
- * ECommerce User is a POJO used for instantiating ECommerce Client if static context
- * is not acceptable.
+ * ECommerce User is a POJO used for instantiating ECommerce Client.
  */
 public class ECommerceUser {
     private String cardAcceptor;

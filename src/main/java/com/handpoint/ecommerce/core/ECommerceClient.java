@@ -2,7 +2,7 @@ package com.handpoint.ecommerce.core;
 
 import com.handpoint.ecommerce.core.exceptions.HpECommerceException;
 import com.handpoint.ecommerce.core.exceptions.HpServerError;
-import com.handpoint.ecommerce.messages.*;
+import com.handpoint.ecommerce.core.exceptions.InvalidMessageException;
 import com.handpoint.ecommerce.messages.payment.*;
 import com.handpoint.ecommerce.messages.token.Token;
 import com.handpoint.ecommerce.messages.token.TokenRequest;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 /**
- * Client to send requests to Bixby E-Commerce Interface
+ * Client to send requests to Handpoint E-Commerce Interface
  * Includes all most common actions.
  */
 public class ECommerceClient {
@@ -55,7 +55,7 @@ public class ECommerceClient {
      *
      * @param cardAcceptor the cardAcceptor to use. Assigned by Handpoint
      * @param sharedSecret the sharedSecret used to authenticate against Handpoint ECommerce API
-     * @param environment enum used to set environment to either TEST or LIVE
+     * @param environment  enum used to set environment to either TEST or LIVE
      */
     public ECommerceClient(String cardAcceptor, String sharedSecret, Environment environment) {
         this.cardAcceptor = cardAcceptor;
@@ -66,9 +66,9 @@ public class ECommerceClient {
      * Default constructor. Instantiates Bixby Client which is used to send the actual HTTP request.
      * Logging filter is disabled.
      *
-     * @param cardAcceptor the cardAcceptor to use. Assigned by Handpoint
-     * @param sharedSecret the sharedSecret used to authenticate against Handpoint ECommerce API
-     * @param environment enum used to set environment to either TEST or LIVE
+     * @param cardAcceptor         the cardAcceptor to use. Assigned by Handpoint
+     * @param sharedSecret         the sharedSecret used to authenticate against Handpoint ECommerce API
+     * @param environment          enum used to set environment to either TEST or LIVE
      * @param enableMessageLogging if true message logging filter is added to the http client, otherwise not.
      */
     public ECommerceClient(String cardAcceptor, String sharedSecret, Environment environment, boolean enableMessageLogging) {
@@ -86,9 +86,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY    the expiry date of the card
      * @param customerReference
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -108,9 +110,11 @@ public class ECommerceClient {
      * @param cardNumber     the card number to charge to
      * @param expiryDateMMYY the expiry date of the card
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
         try {
@@ -131,9 +135,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY    the expiry date of the card
      * @param customerReference
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -154,9 +160,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY       the expiry date of the card
      * @param cardVerificationCode the card verification code, usually found on the back of the card. Three or four digits.
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
         try {
@@ -177,9 +185,11 @@ public class ECommerceClient {
      * @param token             has to be stored in the customers token store
      * @param customerReference
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorizeWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -198,9 +208,11 @@ public class ECommerceClient {
      * @param amount   the amount charged for
      * @param token    has to be stored in the customers token store
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorizeWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
         try {
@@ -222,9 +234,11 @@ public class ECommerceClient {
      * @param token             used to identify the stored card number
      * @param customerReference
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -245,9 +259,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY the expiry date of the card
      * @param token          used to identify the stored card number
      * @return either granted authorization or declined. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
         try {
@@ -268,9 +284,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY    the expiry date of the card
      * @param customerReference
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -290,9 +308,11 @@ public class ECommerceClient {
      * @param cardNumber     the card number to charge to
      * @param expiryDateMMYY the expiry date of the card
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
         try {
@@ -313,9 +333,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY    the expiry date of the card
      * @param customerReference
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -335,9 +357,11 @@ public class ECommerceClient {
      * @param cardNumber     the card number to charge to
      * @param expiryDateMMYY the expiry date of the card
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
         try {
@@ -357,9 +381,11 @@ public class ECommerceClient {
      * @param token             has to be stored in the customers token store
      * @param customerReference
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment paymentWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -378,9 +404,11 @@ public class ECommerceClient {
      * @param amount   the amount charged for
      * @param token    has to be stored in the customers token store
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment paymentWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
         try {
@@ -403,9 +431,11 @@ public class ECommerceClient {
      * @param token             used to identify the stored card number
      * @param customerReference
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -426,9 +456,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY the expiry date of the card
      * @param token          used to identify the stored card number
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
         try {
@@ -447,9 +479,11 @@ public class ECommerceClient {
      * @param amount            the amount charged for
      * @param authorizationGuid retrieved with the original authorization
      * @return either successful payment or unsuccessful. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Payment captureAuthorization(String currency, String amount, String authorizationGuid) throws HpECommerceException, HpServerError {
         try {
@@ -470,9 +504,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY    the expiry date of the card
      * @param customerReference
      * @return either a successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -492,9 +528,11 @@ public class ECommerceClient {
      * @param cardNumber     the card number to refund to.
      * @param expiryDateMMYY the expiry date of the card
      * @return either a successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
 
@@ -515,9 +553,11 @@ public class ECommerceClient {
      * @param token             used to identify the stored card number
      * @param customerReference
      * @return either a successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refundWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -536,9 +576,11 @@ public class ECommerceClient {
      * @param amount   the amount to refund.
      * @param token    used to identify the stored card number
      * @return either a successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refundWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
         try {
@@ -561,9 +603,11 @@ public class ECommerceClient {
      * @param token             used to identify the stored card number
      * @param customerReference
      * @return either successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -584,9 +628,11 @@ public class ECommerceClient {
      * @param expiryDateMMYY the expiry date of the card
      * @param token          used to identify the stored card number
      * @return either successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
         try {
@@ -605,9 +651,11 @@ public class ECommerceClient {
      * @param amount      the amount charged for
      * @param paymentGuid of the payment that shall be refunded.
      * @return either successful or unsuccessful refund. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Refund refundPayment(String currency, String amount, String paymentGuid) throws HpECommerceException, HpServerError {
         try {
@@ -624,9 +672,11 @@ public class ECommerceClient {
      *
      * @param authorizationGuid the GUID for the authorization to reverse
      * @return either successful or unsuccessful reversal. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Reversal reverseAuthorization(String authorizationGuid) throws HpECommerceException, HpServerError {
         try {
@@ -644,9 +694,11 @@ public class ECommerceClient {
      * @param authorizationGuid the GUID for the authorization to reverse
      * @param customerReference
      * @return either successful or unsuccessful reversal. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Reversal reverseAuthorization(String authorizationGuid, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -662,9 +714,11 @@ public class ECommerceClient {
      *
      * @param paymentGuid of the payment to reverse.
      * @return either successful or unsuccessful reversal. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Reversal reversePayment(String paymentGuid) throws HpECommerceException, HpServerError {
         try {
@@ -681,9 +735,11 @@ public class ECommerceClient {
      * @param paymentGuid       of the payment to reverse.
      * @param customerReference
      * @return either successful or unsuccessful reversal. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Reversal reversePayment(String paymentGuid, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -699,9 +755,11 @@ public class ECommerceClient {
      *
      * @param refundGuid of the refund to reverse.
      * @return either successful or unsuccessful reversal. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Reversal reverseRefund(String refundGuid) throws HpECommerceException, HpServerError {
         try {
@@ -718,9 +776,11 @@ public class ECommerceClient {
      * @param refundGuid        of the payment to reverse.
      * @param customerReference
      * @return either successful or unsuccessful reversal. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Reversal reverseRefund(String refundGuid, String customerReference) throws HpECommerceException, HpServerError {
         try {
@@ -738,9 +798,11 @@ public class ECommerceClient {
      * @param amount                   the amount charged for
      * @param terminalDateTimeOriginal the terminal date time sent in the original authorization
      * @return either successful or unsuccessful cancellation. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Cancellation cancelAuthorization(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
         try {
@@ -758,9 +820,11 @@ public class ECommerceClient {
      * @param amount                   the amount charged for
      * @param terminalDateTimeOriginal the terminal date time sent in the original authorization
      * @return either successful or unsuccessful cancellation. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Cancellation cancelPayment(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
         try {
@@ -778,9 +842,11 @@ public class ECommerceClient {
      * @param amount                   the amount charged for
      * @param terminalDateTimeOriginal the terminal date time sent in the original authorization
      * @return either successful or unsuccessful cancellation. Approval code is not set if it is declined.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
 
     public Cancellation cancelRefund(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
@@ -800,9 +866,11 @@ public class ECommerceClient {
      * @param cardNumber     the card number to store in the card storage
      * @param expiryDateMMYY the expiry date of the card number to store
      * @return Information about the card number stored.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Token createToken(String token, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
         try {
@@ -820,9 +888,11 @@ public class ECommerceClient {
      * @param cardNumber     the card number to store in the card storage
      * @param expiryDateMMYY the expiry date of the card number to store
      * @return Information about the card number updated.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Token editToken(String token, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
         try {
@@ -838,9 +908,11 @@ public class ECommerceClient {
      *
      * @param token the identity of the card in the card storage
      * @return Information about the card number retrieved.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Token getToken(String token) throws HpECommerceException, HpServerError {
         try {
@@ -854,9 +926,11 @@ public class ECommerceClient {
      * Delete a previously stored token
      *
      * @param token the identity of the card in the card storage
-     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
-     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError if the server returns an error. HpServerError.getErrors() has detailed error message.
-     *                                 is thrown if response is not 200 or 401, that is if server response with <error></error>.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpECommerceException
+     *          if an error occurs converting messages, message doesn't have sufficient data or an IO error occurs.
+     * @throws com.handpoint.ecommerce.core.exceptions.HpServerError
+     *          if the server returns an error. HpServerError.getErrors() has detailed error message.
+     *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
     public Token deleteToken(String token) throws HpECommerceException, HpServerError {
         try {

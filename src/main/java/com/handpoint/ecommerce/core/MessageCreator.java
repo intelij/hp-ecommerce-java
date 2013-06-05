@@ -1,6 +1,6 @@
 package com.handpoint.ecommerce.core;
 
-import com.handpoint.ecommerce.messages.InvalidMessageException;
+import com.handpoint.ecommerce.core.exceptions.InvalidMessageException;
 import com.handpoint.ecommerce.messages.payment.*;
 import com.handpoint.ecommerce.messages.token.TokenRequest;
 import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
@@ -14,9 +14,23 @@ import java.util.Set;
  */
 public class MessageCreator {
 
+    /**
+     * Create and validate E-Commerce authorization message
+     *
+     * @param paymentScenario
+     * @param currency
+     * @param amount
+     * @param token
+     * @param cardNumber
+     * @param expiryDateMMYY
+     * @param cardVerificationCode
+     * @param customerReference
+     * @return
+     * @throws InvalidMessageException if message fails validation
+     */
     protected static AuthorizationRequest authorizationRequest(String paymentScenario, String currency, String amount,
-                                                            String token, String cardNumber, String expiryDateMMYY,
-                                                            String cardVerificationCode, String customerReference) throws InvalidMessageException {
+                                                               String token, String cardNumber, String expiryDateMMYY,
+                                                               String cardVerificationCode, String customerReference) throws InvalidMessageException {
         AuthorizationRequest authorizationRequest = new AuthorizationRequest();
         authorizationRequest.setPaymentScenario(paymentScenario);
         authorizationRequest.setCurrency(currency);
@@ -35,9 +49,24 @@ public class MessageCreator {
         return authorizationRequest;
     }
 
+    /**
+     * Create and validate E-Commerce payment message
+     *
+     * @param paymentScenario
+     * @param currency
+     * @param amount
+     * @param token
+     * @param cardNumber
+     * @param expiryDateMMYY
+     * @param cardVerificationCode
+     * @param customerReference
+     * @param authorizationGuid
+     * @return
+     * @throws InvalidMessageException if message fails validation
+     */
     protected static PaymentRequest paymentRequest(String paymentScenario, String currency, String amount,
-                                                String token, String cardNumber, String expiryDateMMYY,
-                                                String cardVerificationCode, String customerReference, String authorizationGuid) throws InvalidMessageException {
+                                                   String token, String cardNumber, String expiryDateMMYY,
+                                                   String cardVerificationCode, String customerReference, String authorizationGuid) throws InvalidMessageException {
         PaymentRequest paymentRequest = new PaymentRequest();
         paymentRequest.setAuthorizationGuid(authorizationGuid);
         paymentRequest.setPaymentScenario(paymentScenario);
@@ -59,10 +88,24 @@ public class MessageCreator {
         return paymentRequest;
     }
 
-
+    /**
+     * Create and validate E-Commerce refund message
+     *
+     * @param paymentScenario
+     * @param currency
+     * @param amount
+     * @param token
+     * @param cardNumber
+     * @param expiryDateMMYY
+     * @param cardVerificationCode
+     * @param customerReference
+     * @param paymentGuid
+     * @return
+     * @throws InvalidMessageException if message fails validation
+     */
     protected static RefundRequest refundRequest(String paymentScenario, String currency, String amount,
-                                              String token, String cardNumber, String expiryDateMMYY,
-                                              String cardVerificationCode, String customerReference, String paymentGuid) throws InvalidMessageException {
+                                                 String token, String cardNumber, String expiryDateMMYY,
+                                                 String cardVerificationCode, String customerReference, String paymentGuid) throws InvalidMessageException {
         RefundRequest refundRequest = new RefundRequest();
         refundRequest.setPaymentGuid(paymentGuid);
         refundRequest.setPaymentScenario(paymentScenario);
@@ -83,6 +126,16 @@ public class MessageCreator {
         return refundRequest;
     }
 
+    /**
+     * Create and validate E-Commerce reversal message
+     *
+     * @param authorizationGuid
+     * @param paymentGuid
+     * @param refundGuid
+     * @param cusomterReference
+     * @return
+     * @throws InvalidMessageException if message fails validation
+     */
     protected static ReversalRequest reversalRequest(String authorizationGuid, String paymentGuid, String refundGuid, String cusomterReference) throws InvalidMessageException {
         ReversalRequest reversalRequest = new ReversalRequest();
         reversalRequest.setAuthorizationGuid(authorizationGuid);
@@ -96,6 +149,16 @@ public class MessageCreator {
         }
     }
 
+    /**
+     * Create and validate E-Commerce cancellation message
+     *
+     * @param transactionType
+     * @param currency
+     * @param amount
+     * @param terminalDateTime
+     * @return
+     * @throws InvalidMessageException if message fails validation
+     */
     protected static CancellationRequest cancellationRequest(String transactionType, String currency, String amount, String terminalDateTime) throws InvalidMessageException {
         CancellationRequest cancellationRequest = new CancellationRequest();
         cancellationRequest.setAmount(amount);
@@ -110,6 +173,14 @@ public class MessageCreator {
         return cancellationRequest;
     }
 
+    /**
+     * Create and validate E-Commerce token message
+     *
+     * @param cardNumber
+     * @param expiryDateMMYY
+     * @return
+     * @throws InvalidMessageException if message fails validation
+     */
     protected static TokenRequest tokenRequest(String cardNumber, String expiryDateMMYY) throws InvalidMessageException {
         TokenRequest tokenRequest = new TokenRequest();
         tokenRequest.setCardNumber(cardNumber);
@@ -122,23 +193,55 @@ public class MessageCreator {
         return tokenRequest;
     }
 
+    /**
+     * Validates if a reversal requests has all required values.
+     *
+     * @param message to validate
+     * @return true if message is valid, otherwise false
+     */
     protected static boolean isValidReversalRequest(ReversalRequest message) {
         return message.getAuthorizationGuid() != null || message.getPaymentGuid() != null || message.getRefundGuid() != null;
     }
 
 
+    /**
+     * Validates if a authorization requests has all required values.
+     *
+     * @param message to validate
+     * @return true if message is valid, otherwise false
+     */
     protected static boolean hasValidCardData(AuthorizationRequest message) {
         return (message.getCardNumber() != null && message.getExpiryDateMMYY() != null) || message.getToken() != null;
     }
 
+
+    /**
+     * Validates if a payment requests has all required values.
+     *
+     * @param message to validate
+     * @return true if message is valid, otherwise false
+     */
     protected static boolean hasValidCardData(PaymentRequest message) {
         return (message.getCardNumber() != null && message.getExpiryDateMMYY() != null) || message.getToken() != null || message.getAuthorizationGuid() != null;
     }
 
+
+    /**
+     * Validates if a refund requests has all required values.
+     *
+     * @param message to validate
+     * @return true if message is valid, otherwise false
+     */
     protected static boolean hasValidCardData(RefundRequest message) {
         return (message.getCardNumber() != null && message.getExpiryDateMMYY() != null) || message.getToken() != null || message.getPaymentGuid() != null;
     }
 
+    /**
+     * Method creates an error message from constraint violations.
+     *
+     * @param violations
+     * @return string with violation message.
+     */
     private static String getConstraintViolationMessage(Set violations) {
         StringBuilder builder = new StringBuilder();
         for (Object c : violations) {
