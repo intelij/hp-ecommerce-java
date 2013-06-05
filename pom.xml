@@ -21,6 +21,12 @@ under the License.
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.handpoint</groupId>
@@ -159,8 +165,8 @@ under the License.
     </distributionManagement>
 
     <scm>
-        <url>https://github.com/handpoint/hp-ecommerce-java.git</url>
-        <connection>https://github.com/handpoint/hp-ecommerce-java.git</connection>
+        <url>https://github.com/handpoint/hp-ecommerce-java</url>
+        <connection>scm:git:https://github.com/handpoint/hp-ecommerce-java.git</connection>
     </scm>
 
 </project>
