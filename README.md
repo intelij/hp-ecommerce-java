@@ -18,7 +18,11 @@ Instance ECommerceClient with values provided by Handpoint, for test environment
 public static final String CARD_ACCEPTOR = "7f6451e8314defbb50d0";
 public static final and SHARED_SECRET = "8F10C8AD35B7AEC11675B50DBF6ACEAA0B4EC280B92500E51A02F7BBBE7B07C6"
 
+// Instance client to test Environment without Http logging filter.
 ECommerceClient client = new ECommerceClient(CARD_ACCEPTOR, SHARED_SECRET, Environment.TEST);
+
+// Instance client to test Environment including logging filter.
+ECommerceClient client = new ECommerceClient(CARD_ACCEPTOR, SHARED_SECRET, Environment.TEST, Boolean.TRUE);
 ```
 ### Operations
 Note that all functions use the ECommerce client. See how it is initialized above.

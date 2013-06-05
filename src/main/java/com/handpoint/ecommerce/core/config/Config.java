@@ -72,7 +72,7 @@ public class Config {
      * @return the base live url
      */
     public String getLiveBaseUrl() {
-        return config.getProperty(ConfigEnum.BASE_URL_LIVE.getValue());
+        return config.getProperty(ConfigEnum.BASE_URL_LIVE.getValue(), "");
     }
 
     /**
