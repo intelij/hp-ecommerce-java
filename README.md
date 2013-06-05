@@ -33,16 +33,14 @@ String cardVerificationCode = "123"
 ```
 
 1. Authorization
+
 ```java
 // Authorization using card number and expiry date
 Authorization authorization = client.authorize(Currency.ISK.alpha, amount, cardNumber, expiryDate);
-
 // Authorization using card number, expiry date and card verification code
 Authorization authorization = client.authorizeWithCVC(Currency.ISK.alpha, amount, cardNumber, expiryDate, cardVerificationCode);
-
 // Authorization using token
 Authorization authorization = client.authorizeWithToken(Currency.ISK.alpha, amount, token);
-
 // Authorize and store card number information (token)
 authorization = client.authorizeAndStoreToken(Currency.ISK.alpha, amount, cardNumber, expiryDate, token)
 ```
@@ -58,13 +56,10 @@ Payment payment = client.captureAuthorization(Currency.ISK.alpha, amount, author
 ```java
 // Payment using card number and expiry date
 Payment payment = client.payment(Currency.ISK.alpha, amount, cardNumber, expiryDate);
-
 // Payment using card number, expiry date and card verification code
 Payment payment = client.paymentWithCVC(Currency.ISK.alpha, amount, cardNumber, expiryDate, cardVerificationCode);
-
 // Payment using token
 Payment payment = client.paymentWithToken(Currency.ISK.alpha, amount, token);
-
 // Payment and storing card number information (token)
 Payment payment = client.paymentAndStoreToken(Currency.ISK.alpha, amount, carNumber, expiryDate, token);
 ```
@@ -87,11 +82,9 @@ Refund refund = client.refund(Currency.ISK.alpha, amount, cardNumber, expiryDate
 // Reverse authorization
 Authorization authorization = client.authorize(Currency.ISK.alpha, amount, cardNumber, expiryDate);
 Reversal reversal = client.reverseAuthorization(authorization.getAuthorizationGuid());
-
 // Reverse Payment
 Payment payment = client.payment(Currency.ISK.alpha, amount, cardNumber, expiryDate);
 Reversal reversal = client.reversePayment(payment.getPaymentGuid());
-
 // Reverse refund
 Refund refund = client.refund(Currency.ISK.alpha, amount, cardNumber, expiryDate);
 Reversal reversal = client.reverseRefund(refund.getRefundGuid());
