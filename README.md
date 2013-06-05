@@ -75,7 +75,9 @@ catch(HpEcommerceException e) {
 
 
 5. Refund
+```java
 Refund refund = client.refund(Currency.ISK.alpha, amount, cardNumber, expiryDate);
+```
 
 6. Reversal
 ```java
