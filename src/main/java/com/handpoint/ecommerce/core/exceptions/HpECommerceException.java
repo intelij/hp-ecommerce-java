@@ -8,6 +8,11 @@ package com.handpoint.ecommerce.core.exceptions;
  */
 public class HpECommerceException extends Exception {
 
+    public String terminalDateTime;
+
+    public HpECommerceException(String message) {
+        super(message);
+    }
 
     public HpECommerceException(Throwable e) {
         super(e);
@@ -15,5 +20,16 @@ public class HpECommerceException extends Exception {
 
     public HpECommerceException(String message, Throwable e) {
         super(message, e);
+    }
+
+    public HpECommerceException(Throwable e, String terminalDateTime) {
+        super(e);
+        this.terminalDateTime = terminalDateTime;
+    }
+
+
+    public HpECommerceException(String message, Throwable e, String terminalDateTime) {
+        super(message, e);
+        this.terminalDateTime = terminalDateTime;
     }
 }

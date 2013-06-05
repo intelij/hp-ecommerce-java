@@ -1,5 +1,6 @@
 package com.handpoint.ecommerce.core;
 
+import com.handpoint.ecommerce.core.exceptions.HpECommerceException;
 import com.handpoint.ecommerce.core.exceptions.HpServerError;
 import com.handpoint.ecommerce.messages.ErrorMessage;
 import com.handpoint.ecommerce.messages.payment.*;
@@ -7,8 +8,8 @@ import com.handpoint.ecommerce.messages.token.Token;
 import com.handpoint.ecommerce.messages.token.TokenRequest;
 import com.sun.jersey.api.client.ClientResponse;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -20,6 +21,7 @@ import java.io.IOException;
  */
 public class BixbyClient {
 
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
     private HttpClient httpClient;
     private boolean enableMessageLogging;
     private JaxbMessageConverter messageConverter;
@@ -72,12 +74,18 @@ public class BixbyClient {
      * @param authorizationRequest to be sent to Handpoint E-Commerce web service.
      * @param cardAcceptor         the terminal identifier, used to find the correct merchant.
      * @return Authorization, either approved or declined. If object has approval code has been approved, otherwise declined.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Authorization sendAuthorizationRequest(AuthorizationRequest authorizationRequest, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPostRequest(UrlGenerator.getAuthorizationUrl(cardAcceptor, environment), messageConverter.getMessage(AuthorizationRequest.class, authorizationRequest).getBytes());
+    protected Authorization sendAuthorizationRequest(AuthorizationRequest authorizationRequest, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPostRequest(UrlGenerator.getAuthorizationUrl(cardAcceptor, environment), messageConverter.getMessage(AuthorizationRequest.class, authorizationRequest).getBytes(), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200 || response.getStatus() == 403) {
             return response.getEntity(Authorization.class);
         } else {
@@ -92,12 +100,18 @@ public class BixbyClient {
      * @param paymentRequest to be sent to Handpoint E-Commerce web service.
      * @param cardAcceptor   the terminal identifier, used to find the correct merchant.
      * @return Payment, either approved or declined. If object has approval code has been approved, otherwise declined.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Payment sendPaymentRequest(PaymentRequest paymentRequest, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPostRequest(UrlGenerator.getPaymentUrl(cardAcceptor, environment), messageConverter.getMessage(PaymentRequest.class, paymentRequest).getBytes());
+    protected Payment sendPaymentRequest(PaymentRequest paymentRequest, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPostRequest(UrlGenerator.getPaymentUrl(cardAcceptor, environment), messageConverter.getMessage(PaymentRequest.class, paymentRequest).getBytes(), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200 || response.getStatus() == 403) {
             return response.getEntity(Payment.class);
         } else {
@@ -112,12 +126,19 @@ public class BixbyClient {
      * @param refundRequest to be sent to Handpoint E-Commerce web service.
      * @param cardAcceptor  the terminal identifier, used to find the correct merchant.
      * @return Refund, either approved or declined. If object has approval code has been approved, otherwise declined.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Refund sendRefundRequest(RefundRequest refundRequest, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPostRequest(UrlGenerator.getRefundUrl(cardAcceptor, environment), messageConverter.getMessage(RefundRequest.class, refundRequest).getBytes());
+
+    protected Refund sendRefundRequest(RefundRequest refundRequest, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPostRequest(UrlGenerator.getRefundUrl(cardAcceptor, environment), messageConverter.getMessage(RefundRequest.class, refundRequest).getBytes(), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200 || response.getStatus() == 403) {
             return response.getEntity(Refund.class);
         } else {
@@ -132,12 +153,18 @@ public class BixbyClient {
      * @param reversalRequest to be sent to Handpoint E-Commerce web service.
      * @param cardAcceptor    the terminal identifier, used to find the correct merchant.
      * @return Reversal, either approved or declined.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Reversal sendReversalRequest(ReversalRequest reversalRequest, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPostRequest(UrlGenerator.getReversalUrl(cardAcceptor, environment), messageConverter.getMessage(ReversalRequest.class, reversalRequest).getBytes());
+    protected Reversal sendReversalRequest(ReversalRequest reversalRequest, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPostRequest(UrlGenerator.getReversalUrl(cardAcceptor, environment), messageConverter.getMessage(ReversalRequest.class, reversalRequest).getBytes(), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200 || response.getStatus() == 403) {
             return response.getEntity(Reversal.class);
         } else {
@@ -152,12 +179,18 @@ public class BixbyClient {
      * @param cancellationRequest to be sent to Handpoint E-Commerce web service.
      * @param cardAcceptor        the terminal identifier, used to find the correct merchant.
      * @return Cancellation, either approved or declined.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Cancellation sendCancellationRequest(CancellationRequest cancellationRequest, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPostRequest(UrlGenerator.getCancellationUrl(cardAcceptor, environment), messageConverter.getMessage(CancellationRequest.class, cancellationRequest).getBytes());
+    protected Cancellation sendCancellationRequest(CancellationRequest cancellationRequest, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPostRequest(UrlGenerator.getCancellationUrl(cardAcceptor, environment), messageConverter.getMessage(CancellationRequest.class, cancellationRequest).getBytes(), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200) {
             return response.getEntity(Cancellation.class);
         } else {
@@ -173,12 +206,18 @@ public class BixbyClient {
      * @param cardAcceptor the terminal identifier, used to find the correct merchant.
      * @param token        the card information to store
      * @return a token object with the card information.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Token sendPutToken(TokenRequest tokenRequest, String cardAcceptor, String token) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPutRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment), messageConverter.getMessage(TokenRequest.class, tokenRequest).getBytes());
+    protected Token sendPutToken(TokenRequest tokenRequest, String cardAcceptor, String token) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPutRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment), messageConverter.getMessage(TokenRequest.class, tokenRequest).getBytes());
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 201) {
             return response.getEntity(Token.class);
         } else {
@@ -194,12 +233,18 @@ public class BixbyClient {
      * @param cardAcceptor the terminal identifier, used to find the correct merchant.
      * @param token        the card information to store
      * @return a token object with the card information.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Token sendPostToken(TokenRequest tokenRequest, String cardAcceptor, String token) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendPostRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment), messageConverter.getMessage(TokenRequest.class, tokenRequest).getBytes());
+    protected Token sendPostToken(TokenRequest tokenRequest, String cardAcceptor, String token) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendPostRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment), messageConverter.getMessage(TokenRequest.class, tokenRequest).getBytes(), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200) {
             return response.getEntity(Token.class);
         } else {
@@ -214,12 +259,18 @@ public class BixbyClient {
      * @param cardAcceptor the terminal identifier, used to find the correct merchant.
      * @param token        the card information to get
      * @return a token object with the card information.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Token sendGetToken(String token, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendGetRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment));
+    protected Token sendGetToken(String token, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendGetRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200) {
             return response.getEntity(Token.class);
         } else {
@@ -234,16 +285,27 @@ public class BixbyClient {
      * @param cardAcceptor the terminal identifier, used to find the correct merchant.
      * @param token        the card information token to be deleted
      * @return a token object with the card information.
-     * @throws JAXBException if message conversion fails
-     * @throws IOException   if an exception occurs when reading from stream
-     * @throws HpServerError if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpServerError        if the Handpoint E-Commerce web service returns an error response.
+     * @throws HpECommerceException if internal error occurs
      */
-    protected Token sendDeleteToken(String token, String cardAcceptor) throws JAXBException, IOException, HpServerError {
-        ClientResponse response = httpClient.sendDeleteRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment));
+    protected Token sendDeleteToken(String token, String cardAcceptor) throws HpServerError, HpECommerceException {
+        String terminalDateTime = dateFormat.format(new Date());
+        resetAndAddDateHeader(terminalDateTime);
+        ClientResponse response = null;
+        try {
+            response = httpClient.sendDeleteRequest(UrlGenerator.getTokenizationUrl(cardAcceptor, token, environment), terminalDateTime);
+        } catch (Exception e) {
+            throw new HpECommerceException("Error when sending request", e, terminalDateTime);
+        }
         if (response.getStatus() == 200) {
             return response.getEntity(Token.class);
         } else {
             throw new HpServerError("Error deleting token.", response.getEntity(ErrorMessage.class));
         }
+    }
+
+    private void resetAndAddDateHeader(String terminalDateTime) {
+        httpClient.resetHeaders();
+        httpClient.addHttpHeader(HmacFilter.MWS_DATE, terminalDateTime);
     }
 }

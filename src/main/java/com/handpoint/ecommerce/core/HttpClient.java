@@ -7,7 +7,6 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.ClientFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,9 +66,9 @@ public class HttpClient {
      * @param url  where to send the request
      * @param body the request body to send
      * @return response as byte[] if response is not null, else return null
-     * @throws java.io.IOException
+     * @throws UniformInterfaceException
      */
-    public ClientResponse sendPostRequest(String url, byte[] body) throws IOException, UniformInterfaceException {
+    public ClientResponse sendPostRequest(String url, byte[] body, String terminalDateTime) throws UniformInterfaceException {
         WebResource.Builder builder = getBuilder(url);
         ClientResponse response = builder.post(ClientResponse.class, body);
         return response;
@@ -80,9 +79,9 @@ public class HttpClient {
      *
      * @param url where to send the request
      * @return response as byte[] if response is not null, else return null
-     * @throws java.io.IOException
+     * @throws UniformInterfaceException
      */
-    public ClientResponse sendGetRequest(String url) throws IOException, UniformInterfaceException {
+    public ClientResponse sendGetRequest(String url, String terminalDateTime) throws UniformInterfaceException {
         WebResource.Builder builder = getBuilder(url);
         ClientResponse response = builder.get(ClientResponse.class);
         return response;
@@ -93,9 +92,9 @@ public class HttpClient {
      *
      * @param url where to send the request
      * @return response as byte[] if response is not null, else return null
-     * @throws java.io.IOException
+     * @throws UniformInterfaceException
      */
-    public ClientResponse sendDeleteRequest(String url) throws IOException, UniformInterfaceException {
+    public ClientResponse sendDeleteRequest(String url, String terminalDateTime) throws UniformInterfaceException {
         WebResource.Builder builder = getBuilder(url);
         ClientResponse response = builder.delete(ClientResponse.class);
         return response;
@@ -107,9 +106,9 @@ public class HttpClient {
      * @param url  where to send the request
      * @param body the request body to send
      * @return response as byte[] if response is not null, else return null
-     * @throws java.io.IOException
+     * @throws UniformInterfaceException
      */
-    public ClientResponse sendPutRequest(String url, byte[] body) throws IOException, UniformInterfaceException {
+    public ClientResponse sendPutRequest(String url, byte[] body) throws UniformInterfaceException {
         WebResource.Builder builder = getBuilder(url);
         ClientResponse response = builder.put(ClientResponse.class, body);
         return response;

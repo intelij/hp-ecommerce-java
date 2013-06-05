@@ -7,9 +7,6 @@ import com.handpoint.ecommerce.messages.payment.*;
 import com.handpoint.ecommerce.messages.token.Token;
 import com.handpoint.ecommerce.messages.token.TokenRequest;
 
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
-
 
 /**
  * Client to send requests to Handpoint E-Commerce Interface
@@ -92,14 +89,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, null, customerReference);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, null, customerReference);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
     }
 
     /**
@@ -116,14 +109,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, null, null);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorize(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, null, null);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
     }
 
     /**
@@ -141,14 +130,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, cardVerificationCode, customerReference);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, cardVerificationCode, customerReference);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -166,14 +152,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, cardVerificationCode, null);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorizeWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, cardVerificationCode, null);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
     }
 
 
@@ -191,14 +173,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    null, null, null, customerReference);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorizeWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                null, null, null, customerReference);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
     }
 
     /**
@@ -214,14 +192,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    null, null, null, null);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorizeWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                null, null, null, null);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -240,14 +215,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    cardNumber, expiryDateMMYY, null, customerReference);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                cardNumber, expiryDateMMYY, null, customerReference);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -265,14 +237,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
-        try {
-            AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    cardNumber, expiryDateMMYY, null, null);
-            return client.sendAuthorizationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Authorization failed", e);
-        }
+    public Authorization authorizeAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        AuthorizationRequest request = MessageCreator.authorizationRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                cardNumber, expiryDateMMYY, null, null);
+        return client.sendAuthorizationRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -290,14 +259,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, null, customerReference, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, null, customerReference, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -314,14 +280,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, null, null, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment payment(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, null, null, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -339,14 +302,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, cardVerificationCode, customerReference, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, cardVerificationCode, customerReference, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -363,14 +323,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, cardVerificationCode, null, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment paymentWithCVC(String currency, String amount, String cardNumber, String expiryDateMMYY, String cardVerificationCode) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, cardVerificationCode, null, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
     }
 
     /**
@@ -387,14 +343,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    null, null, null, customerReference, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment paymentWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                null, null, null, customerReference, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
     }
 
     /**
@@ -410,14 +362,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    null, null, null, null, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment paymentWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                null, null, null, null, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
     }
 
 
@@ -437,14 +386,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    cardNumber, expiryDateMMYY, null, customerReference, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+    public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                cardNumber, expiryDateMMYY, null, customerReference, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
     }
 
     /**
@@ -462,14 +407,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    cardNumber, expiryDateMMYY, null, null, null);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Payment failed", e);
-        }
+
+    public Payment paymentAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                cardNumber, expiryDateMMYY, null, null, null);
+        return client.sendPaymentRequest(request, cardAcceptor);
     }
 
     /**
@@ -485,14 +427,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Payment captureAuthorization(String currency, String amount, String authorizationGuid) throws HpECommerceException, HpServerError {
-        try {
-            PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    null, null, null, null, authorizationGuid);
-            return client.sendPaymentRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Confirming authorization failed", e);
-        }
+
+    public Payment captureAuthorization(String currency, String amount, String authorizationGuid) throws HpECommerceException, HpServerError, InvalidMessageException {
+        PaymentRequest request = MessageCreator.paymentRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                null, null, null, null, authorizationGuid);
+        return client.sendPaymentRequest(request, cardAcceptor);
     }
 
     /**
@@ -510,14 +449,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, null, customerReference, null);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding failed", e);
-        }
+
+    public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, null, customerReference, null);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
     /**
@@ -534,15 +470,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
 
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    cardNumber, expiryDateMMYY, null, null, null);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding failed", e);
-        }
+    public Refund refund(String currency, String amount, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                cardNumber, expiryDateMMYY, null, null, null);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
     /**
@@ -559,14 +491,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    null, null, null, customerReference, null);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding failed", e);
-        }
+
+    public Refund refundWithToken(String currency, String amount, String token, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                null, null, null, customerReference, null);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
     /**
@@ -582,14 +511,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError {
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    null, null, null, null, null);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding failed", e);
-        }
+
+    public Refund refundWithToken(String currency, String amount, String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                null, null, null, null, null);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
 
@@ -609,14 +535,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    cardNumber, expiryDateMMYY, null, customerReference, null);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding failed", e);
-        }
+
+    public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                cardNumber, expiryDateMMYY, null, customerReference, null);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
     /**
@@ -634,14 +557,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError {
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
-                    cardNumber, expiryDateMMYY, null, null, null);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding failed", e);
-        }
+
+    public Refund refundAndStoreToken(String currency, String amount, String cardNumber, String expiryDateMMYY, String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, token,
+                cardNumber, expiryDateMMYY, null, null, null);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
     /**
@@ -657,14 +577,11 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Refund refundPayment(String currency, String amount, String paymentGuid) throws HpECommerceException, HpServerError {
-        try {
-            RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
-                    null, null, null, null, paymentGuid);
-            return client.sendRefundRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Refunding payment failed", e);
-        }
+
+    public Refund refundPayment(String currency, String amount, String paymentGuid) throws HpECommerceException, HpServerError, InvalidMessageException {
+        RefundRequest request = MessageCreator.refundRequest(WEB_PAYMENT_SCENARIO, currency, amount, null,
+                null, null, null, null, paymentGuid);
+        return client.sendRefundRequest(request, cardAcceptor);
     }
 
     /**
@@ -678,13 +595,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Reversal reverseAuthorization(String authorizationGuid) throws HpECommerceException, HpServerError {
-        try {
-            ReversalRequest request = MessageCreator.reversalRequest(authorizationGuid, null, null, null);
-            return client.sendReversalRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Reversing authorization failed", e);
-        }
+
+    public Reversal reverseAuthorization(String authorizationGuid) throws HpECommerceException, HpServerError, InvalidMessageException {
+        ReversalRequest request = MessageCreator.reversalRequest(authorizationGuid, null, null, null);
+        return client.sendReversalRequest(request, cardAcceptor);
     }
 
 
@@ -700,13 +614,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Reversal reverseAuthorization(String authorizationGuid, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            ReversalRequest request = MessageCreator.reversalRequest(authorizationGuid, null, null, customerReference);
-            return client.sendReversalRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Reversing authorization failed", e);
-        }
+
+    public Reversal reverseAuthorization(String authorizationGuid, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        ReversalRequest request = MessageCreator.reversalRequest(authorizationGuid, null, null, customerReference);
+        return client.sendReversalRequest(request, cardAcceptor);
     }
 
     /**
@@ -720,13 +631,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Reversal reversePayment(String paymentGuid) throws HpECommerceException, HpServerError {
-        try {
-            ReversalRequest request = MessageCreator.reversalRequest(null, paymentGuid, null, null);
-            return client.sendReversalRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Reversing payment failed", e);
-        }
+    public Reversal reversePayment(String paymentGuid) throws HpECommerceException, HpServerError, InvalidMessageException {
+        ReversalRequest request = MessageCreator.reversalRequest(null, paymentGuid, null, null);
+        return client.sendReversalRequest(request, cardAcceptor);
+
     }
 
     /**
@@ -741,13 +649,9 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Reversal reversePayment(String paymentGuid, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            ReversalRequest request = MessageCreator.reversalRequest(null, paymentGuid, null, customerReference);
-            return client.sendReversalRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Reversing payment failed", e);
-        }
+    public Reversal reversePayment(String paymentGuid, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        ReversalRequest request = MessageCreator.reversalRequest(null, paymentGuid, null, customerReference);
+        return client.sendReversalRequest(request, cardAcceptor);
     }
 
     /**
@@ -761,13 +665,9 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Reversal reverseRefund(String refundGuid) throws HpECommerceException, HpServerError {
-        try {
-            ReversalRequest request = MessageCreator.reversalRequest(null, null, refundGuid, null);
-            return client.sendReversalRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Reversing refund failed", e);
-        }
+    public Reversal reverseRefund(String refundGuid) throws HpECommerceException, HpServerError, InvalidMessageException {
+        ReversalRequest request = MessageCreator.reversalRequest(null, null, refundGuid, null);
+        return client.sendReversalRequest(request, cardAcceptor);
     }
 
     /**
@@ -782,13 +682,9 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Reversal reverseRefund(String refundGuid, String customerReference) throws HpECommerceException, HpServerError {
-        try {
-            ReversalRequest request = MessageCreator.reversalRequest(null, null, refundGuid, customerReference);
-            return client.sendReversalRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Reversing refund failed", e);
-        }
+    public Reversal reverseRefund(String refundGuid, String customerReference) throws HpECommerceException, HpServerError, InvalidMessageException {
+        ReversalRequest request = MessageCreator.reversalRequest(null, null, refundGuid, customerReference);
+        return client.sendReversalRequest(request, cardAcceptor);
     }
 
     /**
@@ -804,13 +700,9 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Cancellation cancelAuthorization(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
-        try {
-            CancellationRequest request = MessageCreator.cancellationRequest(AUTHORIZATION, currency, amount, terminalDateTimeOriginal);
-            return client.sendCancellationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Cancelling authorization failed", e);
-        }
+    public Cancellation cancelAuthorization(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError, InvalidMessageException {
+        CancellationRequest request = MessageCreator.cancellationRequest(AUTHORIZATION, currency, amount, terminalDateTimeOriginal);
+        return client.sendCancellationRequest(request, cardAcceptor);
     }
 
     /**
@@ -826,13 +718,9 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Cancellation cancelPayment(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
-        try {
-            CancellationRequest request = MessageCreator.cancellationRequest(PAYMENT, currency, amount, terminalDateTimeOriginal);
-            return client.sendCancellationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Cancelling payment failed", e);
-        }
+    public Cancellation cancelPayment(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError, InvalidMessageException {
+        CancellationRequest request = MessageCreator.cancellationRequest(PAYMENT, currency, amount, terminalDateTimeOriginal);
+        return client.sendCancellationRequest(request, cardAcceptor);
     }
 
     /**
@@ -849,13 +737,9 @@ public class ECommerceClient {
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
 
-    public Cancellation cancelRefund(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError {
-        try {
-            CancellationRequest request = MessageCreator.cancellationRequest(REFUND, currency, amount, terminalDateTimeOriginal);
-            return client.sendCancellationRequest(request, cardAcceptor);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Cancelling refund failed", e);
-        }
+    public Cancellation cancelRefund(String currency, String amount, String terminalDateTimeOriginal) throws HpECommerceException, HpServerError, InvalidMessageException {
+        CancellationRequest request = MessageCreator.cancellationRequest(REFUND, currency, amount, terminalDateTimeOriginal);
+        return client.sendCancellationRequest(request, cardAcceptor);
 
     }
 
@@ -872,13 +756,10 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Token createToken(String token, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
-        try {
-            TokenRequest request = MessageCreator.tokenRequest(cardNumber, expiryDateMMYY);
-            return client.sendPutToken(request, cardAcceptor, token);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Unable to create token", e);
-        }
+    public Token createToken(String token, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError, InvalidMessageException {
+        TokenRequest request = MessageCreator.tokenRequest(cardNumber, expiryDateMMYY);
+        return client.sendPutToken(request, cardAcceptor, token);
+
     }
 
     /**
@@ -894,13 +775,9 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Token editToken(String token, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError {
-        try {
-            TokenRequest request = MessageCreator.tokenRequest(cardNumber, expiryDateMMYY);
-            return client.sendPostToken(request, cardAcceptor, token);
-        } catch (JAXBException | InvalidMessageException | IOException e) {
-            throw new HpServerError("Unable to edit token", e);
-        }
+    public Token updateToken(String token, String cardNumber, String expiryDateMMYY) throws HpECommerceException, HpServerError, InvalidMessageException {
+        TokenRequest request = MessageCreator.tokenRequest(cardNumber, expiryDateMMYY);
+        return client.sendPostToken(request, cardAcceptor, token);
     }
 
     /**
@@ -914,12 +791,8 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Token getToken(String token) throws HpECommerceException, HpServerError {
-        try {
-            return client.sendGetToken(token, cardAcceptor);
-        } catch (JAXBException | IOException e) {
-            throw new HpECommerceException("Unable to retrieve token", e);
-        }
+    public Token getToken(String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        return client.sendGetToken(token, cardAcceptor);
     }
 
     /**
@@ -932,11 +805,7 @@ public class ECommerceClient {
      *          if the server returns an error. HpServerError.getErrors() has detailed error message.
      *          is thrown if response is not 200 or 401, that is if server response with <error></error>.
      */
-    public Token deleteToken(String token) throws HpECommerceException, HpServerError {
-        try {
-            return client.sendDeleteToken(token, cardAcceptor);
-        } catch (JAXBException | IOException e) {
-            throw new HpECommerceException("Error deleting token", e);
-        }
+    public Token deleteToken(String token) throws HpECommerceException, HpServerError, InvalidMessageException {
+        return client.sendDeleteToken(token, cardAcceptor);
     }
 }

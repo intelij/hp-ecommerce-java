@@ -9,8 +9,6 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.core.MediaType;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * All requests sent to the Handpoint E-Commerce interface need to be authenticated using
@@ -23,7 +21,9 @@ public class HmacFilter extends ClientFilter {
 
     public static final String HMAC_SHA_1 = "HmacSHA1";
     public static final String UTF_8 = "UTF-8";
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    public static final String MWS_DATE = "mws-date";
+    public static final String MWS_HMAC = "mws-hmac";
+    public static final String CONTENT_TYPE = "content-type";
     private String sharedSecret;
 
     static final byte[] HEX_CHAR_TABLE = {
@@ -54,11 +54,10 @@ public class HmacFilter extends ClientFilter {
      * @param request to be sent
      */
     private void addHeaders(ClientRequest request) {
-        String now = dateFormat.format(new Date());
-        String toMac = getHmacString(request, now);
-        request.getHeaders().add("mws-date", now);
-        request.getHeaders().add("mws-hmac", generateHmac(toMac));
-        request.getHeaders().add("content-type", MediaType.APPLICATION_XML);
+        String terminalDateTime = (String) request.getHeaders().getFirst(MWS_DATE);
+        String toMac = getHmacString(request, terminalDateTime);
+        request.getHeaders().add(MWS_HMAC, generateHmac(toMac));
+        request.getHeaders().add(CONTENT_TYPE, MediaType.APPLICATION_XML);
     }
 
 

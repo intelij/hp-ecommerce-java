@@ -2,6 +2,7 @@ package com.handpoint.ecommerce.core;
 
 import com.handpoint.ecommerce.core.exceptions.HpECommerceException;
 import com.handpoint.ecommerce.core.exceptions.HpServerError;
+import com.handpoint.ecommerce.core.exceptions.InvalidMessageException;
 import com.handpoint.ecommerce.messages.payment.*;
 import com.handpoint.ecommerce.messages.token.Token;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class ECommerceClientIT {
 
 
     @Test
-    public void testAuthorization() throws HpServerError, HpECommerceException {
+    public void testAuthorization() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
 
         // Authorization VISA
@@ -99,7 +100,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testAuthorizationWithToken() throws HpECommerceException, HpServerError {
+    public void testAuthorizationWithToken() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         // Authorization using token
         Authorization authorization = client.authorizeWithToken(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, getToken(client).getToken());
@@ -114,7 +115,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testCancelAuth() throws HpServerError, HpECommerceException {
+    public void testCancelAuth() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Authorization authorization = client.authorize(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         Cancellation cancellation = client.cancelAuthorization(authorization.getCurrency(), authorization.getAmount(), authorization.getTerminalDateTime());
@@ -128,7 +129,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testReversalAuthorization() throws HpServerError, HpECommerceException {
+    public void testReversalAuthorization() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Authorization authorization = client.authorize(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         Reversal reversal = client.reverseAuthorization(authorization.getAuthorizationGuid());
@@ -143,7 +144,7 @@ public class ECommerceClientIT {
 
 
     @Test
-    public void testCaptureAuth() throws HpServerError, HpECommerceException {
+    public void testCaptureAuth() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Authorization authorization = client.authorize(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         Payment payment = client.captureAuthorization(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, authorization.getAuthorizationGuid());
@@ -156,7 +157,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testSendPayment() throws HpServerError, HpECommerceException {
+    public void testSendPayment() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Payment payment = client.payment(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         assertThat(payment.getIssuerResponseText(), is("Yay ! Authorized by APDUMMY :-)"));
@@ -170,7 +171,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void refundPaymentWithGuid() throws HpServerError, HpECommerceException {
+    public void refundPaymentWithGuid() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Payment payment = client.payment(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         assertThat(payment.getIssuerResponseText(), is("Yay ! Authorized by APDUMMY :-)"));
@@ -194,7 +195,7 @@ public class ECommerceClientIT {
 
 
     @Test
-    public void testReversePayment() throws HpServerError, HpECommerceException {
+    public void testReversePayment() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Payment payment = client.payment(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         assertThat(payment.getIssuerResponseText(), is("Yay ! Authorized by APDUMMY :-)"));
@@ -217,7 +218,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testSendPaymentWithToken() throws HpServerError, HpECommerceException {
+    public void testSendPaymentWithToken() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Token token = getToken(client);
         Payment payment = client.paymentWithToken(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, token.getToken());
@@ -232,7 +233,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testSendRefund() throws HpServerError, HpECommerceException {
+    public void testSendRefund() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Refund refund = client.refund(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         assertThat(refund.getIssuerResponseText(), is("TPOS 0000-Success"));
@@ -246,7 +247,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testSendRefundWithToken() throws HpServerError, HpECommerceException {
+    public void testSendRefundWithToken() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Refund refund = client.refundWithToken(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, getToken(client).getToken());
         assertThat(refund.getIssuerResponseText(), is("TPOS 0000-Success"));
@@ -261,7 +262,7 @@ public class ECommerceClientIT {
     }
 
     @Test
-    public void testReverseRefund() throws HpServerError, HpECommerceException {
+    public void testReverseRefund() throws HpECommerceException, HpServerError, InvalidMessageException {
         ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, ENVIRONMENT), true);
         Refund refund = client.refund(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, VISA_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
         assertThat(refund.getIssuerResponseText(), is("TPOS 0000-Success"));
@@ -284,7 +285,7 @@ public class ECommerceClientIT {
         assertNotNull(reversal.getApprovalCode());
     }
 
-    private Token getToken(ECommerceClient client) throws HpECommerceException, HpServerError {
+    private Token getToken(ECommerceClient client) throws HpECommerceException, HpServerError, InvalidMessageException {
         Token token = null;
         try {
             token = client.getToken(TEST_TOKEN_01);
