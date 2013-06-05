@@ -1,6 +1,8 @@
 package com.handpoint.ecommerce.core.config;
 
 /**
+ * Enum used for Config class. All properties are listed in an enum.
+ *
  * @author palmithor
  * @since 12/10/12 12:55 PM
  */

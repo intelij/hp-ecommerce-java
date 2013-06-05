@@ -3,6 +3,7 @@ package com.handpoint.ecommerce.core.exceptions;
 import com.handpoint.ecommerce.messages.ErrorMessage;
 
 /**
+ * Exception is thrown when an error from the server comes up
  *
  * @author palmithor
  * @since 12/12/12 10:14 AM

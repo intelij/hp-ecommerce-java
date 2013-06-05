@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.handpoint</groupId>
-    <artifactId>ecommerce-client</artifactId>
+    <artifactId>ecommerce-client-java</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -112,5 +112,9 @@
         </plugins>
     </build>
 
+    <scm>
+        <url>https://github.com/handpoint/hp-ecommerce-java.git</url>
+        <connection>https://github.com/handpoint/hp-ecommerce-java.git</connection>
+    </scm>
 
 </project>

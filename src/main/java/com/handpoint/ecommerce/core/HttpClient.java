@@ -1,6 +1,9 @@
 package com.handpoint.ecommerce.core;
 
-import com.sun.jersey.api.client.*;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.UniformInterfaceException;
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.ClientFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 
@@ -10,15 +13,16 @@ import java.util.Map;
 
 /**
  * Class used for sending requests to REST web services.
+ *
  * @author palmithor
  * @since 12/12/12 10:54 AM
  */
-public class RestClient {
+public class HttpClient {
 
     Map<String, String> httpHeaders;
     Client client;
 
-    public RestClient() {
+    public HttpClient() {
         client = Client.create();
         httpHeaders = new HashMap<>();
     }
@@ -42,6 +46,7 @@ public class RestClient {
     /**
      * Adds a new http header to the httpHeaders map.
      * If the httpHeaders map is null a new instance is created.
+     *
      * @param key   the header key
      * @param value the header value
      */
@@ -73,7 +78,7 @@ public class RestClient {
     /**
      * Sends http get request to a specified url and returns the response as a byte array
      *
-     * @param url  where to send the request
+     * @param url where to send the request
      * @return response as byte[] if response is not null, else return null
      * @throws java.io.IOException
      */
@@ -86,7 +91,7 @@ public class RestClient {
     /**
      * Sends http delete request to a specified url and returns the response as a byte array
      *
-     * @param url  where to send the request
+     * @param url where to send the request
      * @return response as byte[] if response is not null, else return null
      * @throws java.io.IOException
      */
@@ -122,19 +127,19 @@ public class RestClient {
 
 
     public static final class Builder {
-        private RestClient restClient;
+        private HttpClient httpClient;
 
         private Builder() {
-            restClient = new RestClient();
+            httpClient = new HttpClient();
         }
 
         public Builder addFilter(ClientFilter filter) {
-            restClient.getClient().addFilter(filter);
+            httpClient.getClient().addFilter(filter);
             return this;
         }
 
         public Builder addHttpHeader(String key, String value) {
-            restClient.addHttpHeader(key, value);
+            httpClient.addHttpHeader(key, value);
             return this;
         }
 
@@ -143,17 +148,17 @@ public class RestClient {
         }
 
         public Builder addLoggingFilter() {
-            restClient.getClient().addFilter(new LoggingFilter());
+            httpClient.getClient().addFilter(new LoggingFilter());
             return this;
         }
 
         public Builder addHmacFilter(String sharedSecret) {
-            restClient.getClient().addFilter(new HmacFilter(sharedSecret));
+            httpClient.getClient().addFilter(new HmacFilter(sharedSecret));
             return this;
         }
 
-        public RestClient build() {
-            return restClient;
+        public HttpClient build() {
+            return httpClient;
         }
     }
 }
