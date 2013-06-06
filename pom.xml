@@ -84,6 +84,14 @@ under the License.
                     </descriptorRefs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <scmCommentPrefix>Release:</scmCommentPrefix>
+                </configuration>
+            </plugin>
             <!-- Run integration tests (*IT) -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
