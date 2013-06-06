@@ -101,7 +101,7 @@ public class ECommerceClientIT {
 
     @Test
     public void testAuthorizationWithToken() throws HpECommerceException, HpServerError, InvalidMessageException {
-        ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, Environment.LIVE), Boolean.TRUE);
+        ECommerceClient client = new ECommerceClient(new ECommerceUser(CARD_ACCEPTOR, SHARED_SECRET, Environment.TEST), Boolean.TRUE);
         // Authorization using token
         Authorization authorization = client.authorizeWithToken(Currency.ISK.alpha, AMOUNT_70_APPROVE_AMOUNT, getToken(client).getToken());
         assertThat(authorization.getIssuerResponseText(), is("Yay ! Authorized by APDUMMY :-)"));
