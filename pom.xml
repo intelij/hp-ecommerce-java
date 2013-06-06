@@ -29,7 +29,7 @@ under the License.
 
     <groupId>com.handpoint</groupId>
     <artifactId>ecommerce-client-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>hp-ecommerce-java</name>
@@ -188,7 +188,7 @@ under the License.
         <url>https://github.com/handpoint/hp-ecommerce-java</url>
         <developerConnection>scm:git:https://github.com/handpoint/hp-ecommerce-java</developerConnection>
         <connection>scm:git:https://github.com/handpoint/hp-ecommerce-java.git</connection>
-      <tag>ecommerce-client-java-1.0.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
 </project>
