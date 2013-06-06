@@ -188,6 +188,7 @@ under the License.
 
     <scm>
         <url>https://github.com/handpoint/hp-ecommerce-java</url>
+        <developerConnection>https://github.com/handpoint/hp-ecommerce-java</developerConnection>
         <connection>scm:git:https://github.com/handpoint/hp-ecommerce-java.git</connection>
     </scm>
 
