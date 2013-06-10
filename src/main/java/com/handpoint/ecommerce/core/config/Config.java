@@ -2,9 +2,9 @@ package com.handpoint.ecommerce.core.config;
 
 import com.handpoint.ecommerce.core.exceptions.HpServerError;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -61,7 +61,9 @@ public class Config {
         } else if (System.getenv(ConfigEnum.CONFIG_SYSTEM_ENV_LOCATION.getValue()) != null) {
             config.load(new FileInputStream(System.getenv(ConfigEnum.CONFIG_SYSTEM_ENV_LOCATION.getValue())));
         } else {
-            config.load(new FileInputStream(new File("./src/main/resources/ecommerce-client.properties")));
+            InputStream in = getClass().getResourceAsStream("ecommerce-client.properties");
+            config.load(in);
+            in.close();
         }
     }
 
