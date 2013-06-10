@@ -149,12 +149,16 @@ Token token = client.deleteToken("token_identifier");
 
 ### Exceptions
 The client throws three different kind of errors, one for internal errors, one if message fails validation and one for server errors.
+
 1. HpServerError
 If a server error occurs a HpServerError is thrown. The exception includes a variable error message which includes the message the server returned. The error message includes a reason and a list of details, both are in human readable formats. Here is an example how to work with HpServerError
+
 2. HpEcommerceException
 If server does not respond due to network errors or other error, HpEcommerceException is thrown. This error includes a terminalDateTime since there is no way to know if the request was approved or not.
+
 3. InvalidMessageException
 If the request does not include all required data, InvalidMessageException is thrown. The message that comes with this exception is a human readable message describing the reasons why it failed validation.
+
 ```java
         try {
             authorization = client.authorize(Currency.ISK.alpha, AMOUNT_120_DECLINE_AMOUNT, AMERICAN_EXPRESS_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
