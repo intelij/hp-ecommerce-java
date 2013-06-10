@@ -30,7 +30,7 @@ Instance ECommerceClient with values provided by Handpoint, for test environment
 
 ```java
 public static final String CARD_ACCEPTOR = "7f6451e8314defbb50d0";
-public static final and SHARED_SECRET = "8F10C8AD35B7AEC11675B50DBF6ACEAA0B4EC280B92500E51A02F7BBBE7B07C6"
+public static final String SHARED_SECRET = "8F10C8AD35B7AEC11675B50DBF6ACEAA0B4EC280B92500E51A02F7BBBE7B07C6";
 
 // Instance client to test Environment without Http logging filter.
 ECommerceClient client = new ECommerceClient(CARD_ACCEPTOR, SHARED_SECRET, Environment.TEST);
@@ -47,7 +47,7 @@ String amount = "70";
 String cardNumber = "4222222222222";
 String expiryDate = "1215";
 String token = "TOKEN_1";
-String cardVerificationCode = "123"
+String cardVerificationCode = "123";
 String currency = Currency.ISK.alpha;
 ```
 
