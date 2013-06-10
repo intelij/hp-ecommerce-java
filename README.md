@@ -2,7 +2,7 @@
 =================
 
 ## Introduction
-This is a java client library to integrate with Handpoint E-Commerce API
+This is a java client library to integrate with Handpoint E-Commerce API.
 
 ## Installation
 For Maven, add the following dependency to your POM:
@@ -22,7 +22,7 @@ If you are not using maven you can download it and its dependencies manually and
 5. [jersey-client](http://repo1.maven.org/maven2/com/sun/jersey/jersey-client/1.8/jersey-client-1.8.bundle)
 
 ## Usage
-Here below are examples on how to initalize client and use for different kind of operations.
+Here below are examples on how to initialize client and use for different kind of operations. .
 Please take a look at ECommerceClientIT for more information [EcommerceClientIT](https://github.com/handpoint/hp-ecommerce-java/blob/master/src/test/java/com/handpoint/ecommerce/core/ECommerceClientIT.java)
 
 ### Initialize ECommerce Client
@@ -40,6 +40,8 @@ ECommerceClient client = new ECommerceClient(CARD_ACCEPTOR, SHARED_SECRET, Envir
 ```
 ### Operations
 Note that all functions use the ECommerce client. See how it is initialized above.
+If no exception is thrown from the client, it means it got a valid response from the Handpoint ECommerce web service. Response is valid if it has reached the acquirer, and it can either be declined or approved. If an approval code is set it is approved, otherwise not.
+If an error occurs, there are three different kind of exceptions thrown. Exceptions are described below.
 In the examples below, variables are used to pass in to the client. Example values:
 
 ```java
@@ -62,6 +64,14 @@ Authorization authorization = client.authorizeWithCVC(currency, amount, cardNumb
 Authorization authorization = client.authorizeWithToken(currency, amount, token);
 // Authorize and store card number information (token)
 authorization = client.authorizeAndStoreToken(currency, amount, cardNumber, expiryDate, token)
+
+// Check if authorization is approved.
+authorization = client.authorizeAndStoreToken(currency, amount, cardNumber, expiryDate, token)
+if(authorization.getApprovalCode() != null) {
+    // Authorization is approved
+} else {
+    // Authorization is declined.
+}
 ```
 
 2. Authorization + Payment
@@ -135,6 +145,32 @@ Token token = client.updateToken("token_identifier", cardNumber, expiryDate);
 11. Delete Token
 ```java
 Token token = client.deleteToken("token_identifier");
+```
+
+### Exceptions
+The client throws three different kind of errors, one for internal errors, one if message fails validation and one for server errors.
+1. HpServerError
+If a server error occurs a HpServerError is thrown. The exception includes a variable error message which includes the message the server returned. The error message includes a reason and a list of details, both are in human readable formats. Here is an example how to work with HpServerError
+2. HpEcommerceException
+If server does not respond due to network errors or other error, HpEcommerceException is thrown. This error includes a terminalDateTime since there is no way to know if the request was approved or not.
+3. InvalidMessageException
+If the request does not include all required data, InvalidMessageException is thrown. The message that comes with this exception is a human readable message describing the reasons why it failed validation.
+```java
+        try {
+            authorization = client.authorize(Currency.ISK.alpha, AMOUNT_120_DECLINE_AMOUNT, AMERICAN_EXPRESS_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
+        } catch(HpServerError e){
+            // Prints out the reason why the server error occurred. For example CardAcceptor not found.
+            System.out.println(e.getErrorMessage().getReason());
+        } catch(HpECommerceException e) {
+            // Prints out the reason why an internal error occurred or if no answer is retrieved from the server.
+            System.out.println(e.getMessage());
+            // Prints out the date time the message was sent. It is recommended to try to cancel all authorizations that throw this exception,
+            // since it might have been authorized but server could not respond due to network errors for example.
+            System.out.println(e.terminalDateTime);
+        } catch(InvalidMessageException e) {
+            // Prints out which fields are missing in the request. For example: "currency is required"
+            System.out.println(e.getMessage());
+        }
 ```
 
 
