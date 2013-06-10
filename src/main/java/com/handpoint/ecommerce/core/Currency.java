@@ -58,9 +58,9 @@ public enum Currency {
     @XmlEnumValue("USD")
     USD(840, "USD", "US dollar");
 
-    final int id;
-    final String alpha;
-    final String label;
+    public final int id;
+    public final String alpha;
+    public final String label;
 
     private Currency(int id, String alpha, String label) {
         this.id = id;
