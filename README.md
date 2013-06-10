@@ -10,14 +10,14 @@ For Maven, add the following dependency to your POM:
 <dependency>
     <groupId>com.handpoint</groupId>
     <artifactId>ecommerce-client-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 If you are not using maven you can download it and its dependencies manually and include it in your project
 
-1. [ecommerce-client-java-1.0.0-javadoc.jar](https://oss.sonatype.org/content/groups/public/com/handpoint/ecommerce-client-java/1.0.0/ecommerce-client-java-1.0.0-javadoc.jar)
-2. [ecommerce-client-java-1.0.0-sources.jar](https://oss.sonatype.org/content/groups/public/com/handpoint/ecommerce-client-java/1.0.0/ecommerce-client-java-1.0.0-sources.jar)
-3. [ecommerce-client-java-1.0.0](https://oss.sonatype.org/content/groups/public/com/handpoint/ecommerce-client-java/1.0.0/ecommerce-client-java-1.0.0.jar)
+1. [ecommerce-client-java-1.0.1-javadoc.jar](https://oss.sonatype.org/content/groups/public/com/handpoint/ecommerce-client-java/1.0.1/ecommerce-client-java-1.0.1-javadoc.jar)
+2. [ecommerce-client-java-1.0.1-sources.jar](https://oss.sonatype.org/content/groups/public/com/handpoint/ecommerce-client-java/1.0.1/ecommerce-client-java-1.0.1-sources.jar)
+3. [ecommerce-client-java-1.0.1](https://oss.sonatype.org/content/groups/public/com/handpoint/ecommerce-client-java/1.0.1/ecommerce-client-java-1.0.1.jar)
 4. [hibernate-validator](http://repo1.maven.org/maven2/org/hibernate/hibernate-validator/4.3.1.Final/hibernate-validator-4.3.1.Final.jar)
 5. [jersey-client](http://repo1.maven.org/maven2/com/sun/jersey/jersey-client/1.8/jersey-client-1.8.bundle)
 
