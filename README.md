@@ -54,7 +54,6 @@ String currency = Currency.ISK.alpha;
 ```
 
 1. Authorization
-
 ```java
 // Authorization using card number and expiry date
 Authorization authorization = client.authorize(currency, amount, cardNumber, expiryDate);
@@ -150,31 +149,31 @@ Token token = client.deleteToken("token_identifier");
 ### Exceptions
 The client throws three different kind of errors, one for internal errors, one if message fails validation and one for server errors.
 
-1. HpServerError
+1. *HpServerError* :
 If a server error occurs a HpServerError is thrown. The exception includes a variable error message which includes the message the server returned. The error message includes a reason and a list of details, both are in human readable formats. Here is an example how to work with HpServerError
 
-2. HpEcommerceException
-If server does not respond due to network errors or other error, HpEcommerceException is thrown. This error includes a terminalDateTime since there is no way to know if the request was approved or not.
+2. *HpEcommerceException* :
+    If server does not respond due to network errors or other error, HpEcommerceException is thrown. This error includes a terminalDateTime since there is no way to know if the request was approved or not.
 
-3. InvalidMessageException
+3. *InvalidMessageException* :
 If the request does not include all required data, InvalidMessageException is thrown. The message that comes with this exception is a human readable message describing the reasons why it failed validation.
 
 ```java
-        try {
-            authorization = client.authorize(Currency.ISK.alpha, AMOUNT_120_DECLINE_AMOUNT, AMERICAN_EXPRESS_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
-        } catch(HpServerError e){
-            // Prints out the reason why the server error occurred. For example CardAcceptor not found.
-            System.out.println(e.getErrorMessage().getReason());
-        } catch(HpECommerceException e) {
-            // Prints out the reason why an internal error occurred or if no answer is retrieved from the server.
-            System.out.println(e.getMessage());
-            // Prints out the date time the message was sent. It is recommended to try to cancel all authorizations that throw this exception,
-            // since it might have been authorized but server could not respond due to network errors for example.
-            System.out.println(e.terminalDateTime);
-        } catch(InvalidMessageException e) {
-            // Prints out which fields are missing in the request. For example: "currency is required"
-            System.out.println(e.getMessage());
-        }
+try {
+    authorization = client.authorize(Currency.ISK.alpha, AMOUNT_120_DECLINE_AMOUNT, AMERICAN_EXPRESS_TEST_CARD, EXPIRY_DATE_DECEMBER_2015);
+} catch(HpServerError e){
+    // Prints out the reason why the server error occurred. For example CardAcceptor not found.
+    System.out.println(e.getErrorMessage().getReason());
+} catch(HpECommerceException e) {
+    // Prints out the reason why an internal error occurred or if no answer is retrieved from the server.
+    System.out.println(e.getMessage());
+    // Prints out the date time the message was sent. It is recommended to try to cancel all authorizations that throw this exception,
+    // since it might have been authorized but server could not respond due to network errors for example.
+    System.out.println(e.terminalDateTime);
+} catch(InvalidMessageException e) {
+    // Prints out which fields are missing in the request. For example: "currency is required"
+    System.out.println(e.getMessage());
+}
 ```
 
 
